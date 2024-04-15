@@ -1,100 +1,51 @@
-from flask import ( # type: ignore
-    Flask,
-request,
-    jsonify,
-    render_template,
-)  # Importe les modules nécessaires de Flask
-from flask_cors import CORS, cross_origin # type: ignore
-from langchain_openai import ( # type: ignore
-    OpenAIEmbeddings,
-)  # Importe la classe pour les embeddings OpenAI de langchain
-from langchain_openai import ( # type: ignore
-    ChatOpenAI,
-)  # Importe la classe pour utiliser le Chat OpenAI
-from langchain.chains import ( # type: ignore
-    ConversationalRetrievalChain,
-)  # Importe la chaîne de récupération conversationnelle de langchain
-from langchain.document_loaders.csv_loader import ( # type: ignore
-    CSVLoader,
-)  # Importe le chargeur CSV de langchain
-from langchain_community.vectorstores import ( # type: ignore
-    FAISS,
-)  # Importe le magasin de vecteurs FAISS de langchain
-from dotenv import ( # type: ignore
-    load_dotenv,
-)  # Importe la fonction pour charger les variables d'environnement
-import os  # Importe le module os pour interagir avec le système d'exploitation
-import requests  # Importe le module requests pour faire des requêtes HTTP # type: ignore
-import csv  # Importe le module csv pour lire et écrire des fichiers CSV
-import re  # Importe le module re pour les expressions régulières
+from flask import Flask, request, jsonify
+from flask_cors import CORS
+from dotenv import load_dotenv
+import os
+import requests
+import re
+import logging
+
+from config import ApplicationConfig
+from logging_config import setup_logging
+from initialization import initialize_app
+from langchain_openai import OpenAIEmbeddings, ChatOpenAI  # Regrouped imports
+from langchain.chains import ConversationalRetrievalChain
+from langchain.document_loaders.csv_loader import CSVLoader
+from langchain_community.vectorstores import FAISS
 
 app = Flask(__name__)
-cors = CORS(app)  # Initialise l'application Flask
-load_dotenv()  # Charge les variables d'environnement du fichier .env
-openai_api_key = os.getenv(
-    "OPENAI_API_KEY"
-)  # Récupère la clé API d'OpenAI depuis les variables d'environnement
-spotify_client_id = os.getenv(
-    "SPOTIFY_CLIENT_ID"
-)  # Récupère l'ID client Spotify depuis les variables d'environnement
-spotify_client_secret = os.getenv(
-    "SPOTIFY_CLIENT_SECRET"
-)  # Récupère le secret client Spotify depuis les variables d'environnement
-script_dir = os.path.dirname(__file__)  # Définit le répertoire du script actuel
-csv_file_name = "genres_musicaux_descriptions.csv"  # Nom du fichier CSV contenant les descriptions des genres musicaux
-tmp_file_path = os.path.join(
-    script_dir, csv_file_name
-)  # Construit le chemin complet vers le fichier CSV des descriptions
-csv_genres_path = os.path.join(
-    script_dir, "genres_musicaux_nom.csv"
-)  # Construit le chemin complet vers le fichier CSV des noms de genres
-data = None  # Initialisation des variables globales pour stocker les données
-vectorstore = None  # Initialisation des variables globales pour stocker le vectorstore
+CORS(app)
+load_dotenv()
+setup_logging()
 
-# Création d'un chargeur CSV pour lire les données à partir du fichier spécifié, avec l'encodage UTF-8 et un délimiteur de virgule
+# Environment variables
+openai_api_key = os.getenv("OPENAI_API_KEY")
+spotify_client_id = os.getenv("SPOTIFY_CLIENT_ID")
+spotify_client_secret = os.getenv("SPOTIFY_CLIENT_SECRET")
+
+# File paths
+script_dir = os.path.dirname(__file__)
+csv_folder = os.path.join(script_dir, "CSV")
+csv_descriptions_path = os.path.join(csv_folder, "genres_musicaux_descriptions.csv")
+csv_names_path = os.path.join(csv_folder, "genres_musicaux_names.csv")
+
+# Application initialization
+if not initialize_app(csv_descriptions_path, csv_names_path):
+    logging.error("Failed to initialize the application.")
+    exit(1)  # Exit if initialization fails
+
+# Data loading using CSVLoader
 loader = CSVLoader(
-    file_path=tmp_file_path, encoding="utf-8", csv_args={"delimiter": ","}
+    file_path=csv_descriptions_path, encoding="utf-8", csv_args={"delimiter": ","}
 )
-data = loader.load()  # Chargement des données à partir du fichier CSV
-embeddings = OpenAIEmbeddings(
-    openai_api_key=openai_api_key
-)  # Initialisation des embeddings OpenAI avec la clé API fournie
-print(
-    "Embeddings créés."
-)  # Affiche un message dans la console une fois les embeddings créés
-vectorstore = FAISS.from_documents(
-    data, embeddings
-)  # Création d'un vectorstore FAISS à partir des documents et des embeddings
-print(
-    "Vectorstore créé avec succès."
-)  # Affiche un message de succès une fois le vectorstore créé
+data = loader.load()
 
-
-# Fonction pour charger les genres musicaux à partir d'un fichier CSV
-def load_genres_from_csv(csv_file_path):
-    genres = []  # Initialisation d'une liste pour stocker les genres
-    with open(
-        csv_file_path, mode="r", encoding="utf-8"
-    ) as csvfile:  # Ouverture du fichier CSV en mode lecture
-        csvreader = csv.reader(
-            csvfile
-        )  # Création d'un objet reader pour lire le fichier CSV
-        for row in csvreader:  # Pour chaque ligne du fichier CSV
-            genres.append(
-                row[0]
-            )  # Ajoute le premier élément de chaque ligne (le nom du genre) à la liste des genres
-    return genres  # Retourne la liste des genres
-
-
-# Fonction pour initialiser l'application avec les genres connus
-def initialize_app():
-    global data, known_genres  # Déclare data et known_genres comme variables globales
-    known_genres = load_genres_from_csv(
-        csv_genres_path
-    )  # Charge les genres connus à partir du fichier CSV spécifié
-    print(
-        "Known genre loadé avec succès."
-    )  # Affiche un message de succès une fois les genres chargés
+# Embeddings and vector store initialization
+embeddings = OpenAIEmbeddings(openai_api_key=openai_api_key)
+logging.info("Embeddings created.")
+vectorstore = FAISS.from_documents(data, embeddings)
+logging.info("Vectorstore created successfully.")
 
 
 # Fonction pour obtenir un token Spotify en utilisant l'ID client et le secret client
@@ -233,21 +184,14 @@ def filter_response_for_music_theme(response):
 
 
 # Définit une fonction pour détecter le genre musical dans la requête de l'utilisateur
-def detect_genre_in_query(query):
-    query = query.lower()  # Convertit la requête en minuscules pour la comparaison
-    for (
-        genre
-    ) in (
-        known_genres
-    ):  # Parcourt la liste des genres connus pour trouver une correspondance
-        genre_pattern = (
-            "\\b" + ".?\\s*".join(re.escape(char) for char in genre.lower()) + ".?\\b"
-        )  # Crée une expression régulière pour détecter le genre dans la requête
-        if re.search(
-            genre_pattern, query
-        ):  # Recherche le genre dans la requête en utilisant l'expression régulière
-            return genre  # Retourne le genre s'il est détecté
-    return None  # Retourne None si aucun genre n'est détecté
+def detect_genre_in_query(query, genre_names):
+    """Détecte si un genre musical se trouve dans la requête."""
+    query = query.lower()
+    for genre in genre_names:
+        genre_pattern = r"\b" + re.escape(genre.lower()) + r"\b"
+        if re.search(genre_pattern, query):
+            return genre
+    return None
 
 
 def nettoyer_texte(texte):
@@ -315,9 +259,9 @@ def chat():
                     for playlist in playlists:
                         # Ajoute le nom et l'URL de chaque playlist trouvée à la liste
                         playlist_texts.append(f"{playlist['name']}: {playlist['url']}")
-                    response[
-                        "playlists"
-                    ] = playlists  # Met à jour la réponse avec les playlists trouvées
+                    response["playlists"] = (
+                        playlists  # Met à jour la réponse avec les playlists trouvées
+                    )
             except Exception as e:
                 # Gère les exceptions et imprime l'erreur si la recherche de playlists échoue
                 print(f"Erreur lors de la recherche de playlists Spotify: {e}")
@@ -335,5 +279,11 @@ def chat():
 
 # Point d'entrée principal pour exécuter l'application Flask en mode debug
 if __name__ == "__main__":
-    initialize_app()  # Appelle la fonction d'initialisation de l'application
-    app.run(debug=True)  # Lance le serveur Flask en mode debug
+    if initialize_app(
+        csv_descriptions_path, csv_names_path
+    ):  # Initialise l'application avec le chemin vers le CSV
+        app.run(
+            debug=True
+        )  # Démarre l'application Flask seulement si l'initialisation est réussie
+    else:
+        print("Failed to initialize the application.")

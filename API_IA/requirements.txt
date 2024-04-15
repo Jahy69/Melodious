@@ -6,4 +6,5 @@ faiss-cpu
 tiktoken
 gunicorn
 python-dotenv
-flask-cors
+flask_cors
+logging
