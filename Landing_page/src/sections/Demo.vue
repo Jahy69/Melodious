@@ -104,7 +104,7 @@ export default {
       };
 
       let botResponse;
-      await fetch("http://127.0.0.1:5000/chat", requestOptions)
+      await fetch("https://melodious69-8eecb5339a18.herokuapp.com/chat", requestOptions)
           .then((response) => response.text())
           .then((result) => (botResponse = JSON.parse(result)))
           .catch((error) => console.log("error", error));
