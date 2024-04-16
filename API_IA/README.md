@@ -41,7 +41,7 @@ Don't forget to rename the env_example file to .env
 
 ## Start
 To start the API, use the following command in the project root directory:
-``bash
+```bash
   python3 API.py
 ```
 
