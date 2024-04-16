@@ -18,7 +18,7 @@ from langchain_community.vectorstores import FAISS
 
 app = Flask(__name__)
 CORS(app)
-load_dotenv()
+#load_dotenv()
 
 openai_api_key = os.getenv("OPENAI_API_KEY")
 spotify_client_id = os.getenv("SPOTIFY_CLIENT_ID")
