@@ -1,46 +1,48 @@
 
-# IA de recommandation musicale
-Ce projet est une API construite avec Flask et intégrant LanguageChain et OpenAI, spécialement conçue pour offrir des fonctionnalités autour de la musique. Elle permet de traiter des requêtes textuelles et de fournir des réponses en lien avec la musique grâce à l'intelligence artificielle.
+# Music recommendation AI
+This project is an API built with Flask and integrating LanguageChain and OpenAI, specially designed to offer music-related functionalities. It can process text queries and provide music-related answers thanks to artificial intelligence.
 
-## Configuration Initiale
-Avant de lancer l'API, quelques étapes de configuration sont nécessaires.
+## Initial configuration
+Before launching the API, a few configuration steps are required.
 
-### Prérequis
-- Python 3.8 ou plus récent.
-- pip (gestionnaire de paquets Python).
-- Un environnement virtuel Python (recommandé).
+### Prerequisites
+- Python 3.8 or later.
+- pip (Python package manager).
+- Python virtual environment (recommended).
 
 ## Installation
 
-Cloner le repo Github :
+Clone the Github :
 ```bash
-git clone <url_du_dépôt>
-cd <nom_du_dossier_du_projet>
+git clone <url_of_repository>
+cd <project_folder_name>
 ```
-Créez et activez un environnement virtuel :
+Create and activate a virtual environment:
 ```bash
 python -m venv venv
 source venv/bin/activate
 ```
-Installez les dépendance :
+Install the dependencies:
 ```bash
 pip install -r requirements.txt
 ```
     
 ## Environment Variables
 
-Ouvrez le fichier .env et modifiez les valeurs des variables d'environnement pour correspondre à votre configuration
+Open the .env file and modify the values of the environment variables to match your configuration
 
-`OPENAI_API_KEY` = Votre clé API OpenAI.
+`OPENAI_API_KEY` = Your OpenAI API key.
 
-`SPOTIFY_CLIENT_ID` = Votre ID d'application Spotify
+`SPOTIFY_CLIENT_ID` = Your Spotify application ID.
 
-`SPOTIFY_CLIENT_SECRET` = Votre Client secret d'application Spotify
+`SPOTIFY_CLIENT_SECRET` = Your Spotify application secret client.
 
-## Lancement
-Pour démarrer l'API, utilisez la commande suivante dans le répertoire racine du projet :
-```bash
+Don't forget to rename the env_example file to .env
+
+## Start
+To start the API, use the following command in the project root directory:
+``bash
   python3 API.py
 ```
 
-Ceci lancera l'API Flask sur localhost avec le port par défaut 5000. Vous pouvez accéder à l'API via http://localhost:5000.
+This will launch the Flask API on localhost with the default port 5000. You can access the API via http://localhost:5000.
