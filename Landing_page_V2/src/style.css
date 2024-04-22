@@ -1,0 +1,27 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+
+:root {
+	font-family: "Montserrat", sans-serif;
+	line-height: 1.5;
+	font-weight: 400;
+	color: #0f1a29;
+	background-color: #ffffff;
+	scroll-behavior: smooth;
+}
+
+body {
+	margin: 0;
+}
+
+p {
+	margin: 0;
+}
+
+body {
+	overflow: hidden
+}
+
+@font-face {
+  font-family: "neuropolitical";
+  src: url("../src/assets/font/neuropolitical_rg.otf") format("opentype");
+}
