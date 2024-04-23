@@ -1,18 +1,18 @@
 <script setup>
-import { useAuth0 } from '@auth0/auth0-vue';
+	import { useAuth0 } from '@auth0/auth0-vue';
 
-const { loginWithRedirect, isAuthenticated } = useAuth0();
+	const { loginWithRedirect, isAuthenticated } = useAuth0();
 
-const login = () => {
-  loginWithRedirect();
-};
+	const login = () => {
+		loginWithRedirect();
+	};
 </script>
 
 <template>
 	<div class="home">
 		<div class="right-title">
 			<div class="logo">
-				<img src="../assets/logo.svg" alt="">
+				<img src="../assets/logo.svg" alt="" />
 			</div>
 			<div class="title">Melodious</div>
 		</div>
@@ -28,22 +28,22 @@ const login = () => {
 			</div>
 			<div class="row">
 				<div class="image-container">
-					<img class="image" src="../assets/home.png" alt="">
+					<img class="image" src="../assets/home.png" alt="" />
 				</div>
 				<div class="content">
 					<div class="text-container">
 						<div class="text">AI Powered Music</div>
 						<div class="cta">
 							<p class="cta-text">Explorer</p>
-							<img class="cta-icone" src="../assets/explore.svg" alt="">
+							<img class="cta-icone" src="../assets/explore.svg" alt="" />
 						</div>
 					</div>
 					<div class="social">
 						<div class="divider"></div>
-						<img class="icone" src="../assets/twitter.svg" alt="">
-						<img class="icone" src="../assets/linkedin.svg" alt="">
-						<img class="icone" src="../assets/facebook.svg" alt="">
-						<img class="icone" src="../assets/instagram.svg" alt="">
+						<img class="icone" src="../assets/twitter.svg" alt="" />
+						<img class="icone" src="../assets/linkedin.svg" alt="" />
+						<img class="icone" src="../assets/facebook.svg" alt="" />
+						<img class="icone" src="../assets/instagram.svg" alt="" />
 						<div class="divider"></div>
 					</div>
 				</div>
@@ -73,11 +73,11 @@ const login = () => {
 	}
 	.title {
 		margin-top: 30px;
-		color: #BDBCBC;
-    font-size: 7rem;
-    writing-mode: vertical-rl;
-    text-orientation: mixed;
-    font-family: "neuropolitical", sans-serif;
+		color: #bdbcbc;
+		font-size: 7rem;
+		writing-mode: vertical-rl;
+		text-orientation: mixed;
+		font-family: 'neuropolitical', sans-serif;
 	}
 	.col {
 		display: flex;
@@ -87,9 +87,10 @@ const login = () => {
 	.row {
 		display: flex;
 		flex-direction: row;
-		height: 100%;
+		height: calc(100vh - 100px);
 	}
 	.navbar {
+		z-index: 1000;
 		height: 100px;
 		width: 100%;
 		display: flex;
@@ -97,17 +98,17 @@ const login = () => {
 		align-items: center;
 	}
 	.nav-btn {
-		font-family: "neuropolitical", sans-serif;
+		font-family: 'neuropolitical', sans-serif;
 		font-size: 0.85rem;
-		color: #BDBCBC;
+		color: #bdbcbc;
 		padding: 10px 20px;
 		cursor: pointer;
 	}
 	.login {
-		font-family: "neuropolitical", sans-serif;
-		background-color: #9C8978;
+		font-family: 'neuropolitical', sans-serif;
+		background-color: #9c8978;
 		padding: 5px 10px;
-		color : #171717;
+		color: #171717;
 		border-radius: 100px;
 		width: 120px;
 		display: flex;
@@ -145,23 +146,22 @@ const login = () => {
 		line-height: 111.4%;
 		text-align: center;
 		width: 80%;
-		-webkit-text-stroke: 1px #BDBCBC;
+		-webkit-text-stroke: 1px #bdbcbc;
 		color: transparent;
-
 	}
 	.cta {
 		margin-top: 25px;
 		display: flex;
 		font-weight: 700;
 		padding: 5px 10px;
-		color : #171717;
+		color: #171717;
 		width: 140px;
 		align-items: center;
 		margin-right: 35px;
 		margin-left: 45px;
 		cursor: pointer;
-		background: linear-gradient(90deg, #998675 0%, #C7B299 100%);
-		border: 1px solid #BDBCBC;
+		background: linear-gradient(90deg, #998675 0%, #c7b299 100%);
+		border: 1px solid #bdbcbc;
 		border-radius: 15px;
 	}
 	.cta-text {
@@ -180,7 +180,7 @@ const login = () => {
 	.divider {
 		height: 1px;
 		width: 100px;
-		background-color: #BDBCBC;
+		background-color: #bdbcbc;
 		margin: 0 15px;
 	}
 	.icone {
