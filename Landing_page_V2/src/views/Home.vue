@@ -34,16 +34,24 @@
 					<div class="text-container">
 						<div class="text">AI Powered Music</div>
 						<div class="cta">
-							<p class="cta-text">Explorer</p>
+							<router-link class="cta-text" to="/fonctionnalites">Explorer</router-link>
 							<img class="cta-icone" src="../assets/explore.svg" alt="" />
 						</div>
 					</div>
 					<div class="social">
 						<div class="divider"></div>
-						<img class="icone" src="../assets/twitter.svg" alt="" />
-						<img class="icone" src="../assets/linkedin.svg" alt="" />
-						<img class="icone" src="../assets/facebook.svg" alt="" />
-						<img class="icone" src="../assets/instagram.svg" alt="" />
+						<a target="_blank" href="">
+							<img class="icone" src="../assets/twitter.svg" alt="" />
+						</a>
+						<a target="_blank" href="">
+							<img class="icone" src="../assets/linkedin.svg" alt="" />
+						</a>
+						<a target="_blank" href="">
+							<img class="icone" src="../assets/facebook.svg" alt="" />
+						</a>
+						<a target="_blank" href="https://www.instagram.com/melodious_fr/">
+							<img class="icone" src="../assets/instagram.svg" alt="" />
+						</a>
 						<div class="divider"></div>
 					</div>
 				</div>
@@ -165,6 +173,7 @@
 		border-radius: 15px;
 	}
 	.cta-text {
+		color: #171717;
 		margin-right: 20px;
 		margin-left: 20px;
 	}

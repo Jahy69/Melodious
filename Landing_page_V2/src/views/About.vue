@@ -123,6 +123,7 @@
 		height: calc(100vh - 100px);
 		display: flex;
 		justify-content: space-evenly;
+		margin-top: 7vh;
 	}
 	.left {
 		width: 42vw;
@@ -145,7 +146,6 @@
 		line-height: 111.4%;
 		color: #d9d9d9;
 		margin-bottom: 60px;
-		margin-top: 60px;
 	}
 	.text {
 		font-style: normal;

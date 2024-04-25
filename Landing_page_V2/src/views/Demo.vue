@@ -109,7 +109,7 @@
 					recommandations personnalisées basées sur vos goûts.<br><br> • Apprendre des techniques musicales : Obtenez des explications sur les techniques utilisées dans vos morceaux préférés.<br><br> • Écouter des anecdotes
 					musicales : Plongez dans l'histoire et les origines des chansons et des mouvements musicaux.<br><br> Tapez simplement votre question ou votre intérêt et laissez vous guider par l'expertise de notre AI.
 				</div>
-				<div class="btn">Mettre à niveau</div>
+				<RouterLink class="btn" to="/profil">Mettre à niveau</RouterLink>
 			</div>
 		</div>
 	</div>

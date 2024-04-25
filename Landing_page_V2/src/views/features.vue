@@ -142,7 +142,7 @@
 		line-height: 111.4%;
 		text-align: center;
 		color: #bdbcbc;
-		margin-top: 10vh;
+		margin-top: 7vh;
 		margin-bottom: 10vh;
 	}
 	.row {
