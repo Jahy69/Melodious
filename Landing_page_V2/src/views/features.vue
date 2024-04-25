@@ -28,7 +28,7 @@
 			<div class="title">Les fonctionnalités essentielles de Melodious</div>
 			<div class="row">
 				<div class="card">
-					<img class="icon" src="../assets/explore.svg" alt="" />
+					<img class="icon" src="../assets/feature1.svg" alt="" />
 					<div class="text-container">
 						<div class="card-title">Votre assistant musical qui apprend avec vous</div>
 						<div class="text">
@@ -38,7 +38,7 @@
 					</div>
 				</div>
 				<div class="card">
-					<img class="icon" src="../assets/explore.svg" alt="" />
+					<img class="icon" src="../assets/feature2.svg" alt="" />
 					<div class="text-container">
 						<div class="card-title">Comprenez l'art derrière la musique</div>
 						<div class="text">
@@ -48,7 +48,7 @@
 					</div>
 				</div>
 				<div class="card">
-					<img class="icon" src="../assets/explore.svg" alt="" />
+					<img class="icon" src="../assets/feature3.svg" alt="" />
 					<div class="text-container">
 						<div class="card-title">Élargissez vos horizons musicaux</div>
 						<div class="text">
@@ -60,7 +60,7 @@
 			</div>
 			<div class="row">
 				<div class="card">
-					<img class="icon" src="../assets/explore.svg" alt="" />
+					<img class="icon" src="../assets/feature4.svg" alt="" />
 					<div class="text-container">
 						<div class="card-title">Explorez un monde de musique sur mesure</div>
 						<div class="text">
@@ -70,7 +70,7 @@
 					</div>
 				</div>
 				<div class="card">
-					<img class="icon" src="../assets/explore.svg" alt="" />
+					<img class="icon" src="../assets/feature5.svg" alt="" />
 					<div class="text-container">
 						<div class="card-title">Voyagez à travers l'histoire de la musique</div>
 						<div class="text">
@@ -115,8 +115,10 @@
 		font-family: 'neuropolitical', sans-serif;
 		font-size: 0.85rem;
 		color: #bdbcbc;
-		padding: 10px 20px;
+		padding: 3px 0px;
+		margin: 7px 20px;
 		cursor: pointer;
+		border-bottom: 2px solid transparent;
 	}
 	.login {
 		font-family: 'neuropolitical', sans-serif;
@@ -130,6 +132,7 @@
 		margin-right: 35px;
 		margin-left: 45px;
 		cursor: pointer;
+		border-bottom: 0px solid transparent !important;
 	}
 	.content {
 		height: calc(100vh - 100px);
@@ -152,8 +155,8 @@
 	}
 	.card {
 		height: 150px;
-		width: 400px;
-		margin: 40px 20px;
+		width: 430px;
+		margin: 40px 15px;
 		background: rgba(201, 191, 182, 0.5);
 		border: 1px solid #bdbcbc;
 		backdrop-filter: blur(100px);
@@ -180,15 +183,17 @@
 		color: #000000;
 	}
 	.text {
-		margin-top: 5px;
+		margin-top: 7px;
 		margin-right: 25px;
-		font-style: normal;
-		font-weight: 400;
-		font-size: 13px;
-		line-height: 16px;
+		font-weight: 500;
+		font-size: 12px;
+		line-height: 17px;
 		color: #000000;
 	}
 	a {
 		text-decoration: none;
+	}
+	.router-link-exact-active {
+		border-bottom: 2px solid #bdbcbc;
 	}
 </style>

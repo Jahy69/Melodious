@@ -102,12 +102,14 @@
 				</div>
 			</div>
 			<div class="demo-right">
-				<div class="title">ESSAYEZ GRATUITEMENT <span style="font-family: 'Neuropolitical';">Melodious</span></div>
+				<div class="title">ESSAYEZ GRATUITEMENT <span style="font-family: 'Neuropolitical'">Melodious</span></div>
 				<div class="text">
-					Notre chatbot intelligent utilise l'intelligence artificielle pour enrichir votre expérience musicale de manière interactive et éducative. Voici ce que vous pouvez faire avec Melodious : <br><br>• Explorer
-					des genres musicaux : De la pop au baroque, découvrez les subtilités et les histoires derrière divers genres musicaux.<br><br> • Découvrir des artistes et des chansons : Trouvez de nouveaux favoris avec des
-					recommandations personnalisées basées sur vos goûts.<br><br> • Apprendre des techniques musicales : Obtenez des explications sur les techniques utilisées dans vos morceaux préférés.<br><br> • Écouter des anecdotes
-					musicales : Plongez dans l'histoire et les origines des chansons et des mouvements musicaux.<br><br> Tapez simplement votre question ou votre intérêt et laissez vous guider par l'expertise de notre AI.
+					Notre chatbot intelligent utilise l'intelligence artificielle pour enrichir votre expérience musicale de manière interactive et éducative. Voici ce que vous pouvez faire avec Melodious : <br /><br />•
+					Explorer des genres musicaux : De la pop au baroque, découvrez les subtilités et les histoires derrière divers genres musicaux.<br /><br />
+					• Découvrir des artistes et des chansons : Trouvez de nouveaux favoris avec des recommandations personnalisées basées sur vos goûts.<br /><br />
+					• Apprendre des techniques musicales : Obtenez des explications sur les techniques utilisées dans vos morceaux préférés.<br /><br />
+					• Écouter des anecdotes musicales : Plongez dans l'histoire et les origines des chansons et des mouvements musicaux.<br /><br />
+					Tapez simplement votre question ou votre intérêt et laissez vous guider par l'expertise de notre AI.
 				</div>
 				<RouterLink class="btn" to="/profil">Mettre à niveau</RouterLink>
 			</div>
@@ -153,8 +155,10 @@
 		font-family: 'neuropolitical', sans-serif;
 		font-size: 0.85rem;
 		color: #bdbcbc;
-		padding: 10px 20px;
+		padding: 3px 0px;
+		margin: 7px 20px;
 		cursor: pointer;
+		border-bottom: 2px solid transparent;
 	}
 	.login {
 		font-family: 'neuropolitical', sans-serif;
@@ -168,10 +172,10 @@
 		margin-right: 35px;
 		margin-left: 45px;
 		cursor: pointer;
+		border-bottom: 0px solid transparent !important;
 	}
 	a {
 		text-decoration: none !important;
-		/* margin-top: 20%; */
 		display: flex;
 		justify-content: center;
 	}
@@ -221,7 +225,7 @@
 		overflow: scroll;
 		overflow-x: hidden;
 		padding-top: 15px;
-    padding-bottom: 25px;
+		padding-bottom: 25px;
 	}
 	.imessage {
 		border-radius: 0.25rem;
@@ -374,8 +378,8 @@
 		border-radius: 15px;
 	}
 	.title {
-    margin-top: 20px;
-    width: 350px;
+		margin-top: 20px;
+		width: 350px;
 		font-weight: 400;
 		font-size: 25px;
 		line-height: 30px;
@@ -383,7 +387,7 @@
 		text-align: center;
 	}
 	.text {
-    margin-top: 20px;
+		margin-top: 20px;
 		font-style: normal;
 		font-weight: 400;
 		font-size: 16px;
@@ -391,5 +395,8 @@
 		display: flex;
 		align-items: center;
 		color: #c6c6c6;
+	}
+	.router-link-exact-active {
+		border-bottom: 2px solid #bdbcbc;
 	}
 </style>

@@ -109,8 +109,10 @@
 		font-family: 'neuropolitical', sans-serif;
 		font-size: 0.85rem;
 		color: #bdbcbc;
-		padding: 10px 20px;
+		padding: 3px 0px;
+		margin: 7px 20px;
 		cursor: pointer;
+		border-bottom: 2px solid transparent;
 	}
 	.login {
 		font-family: 'neuropolitical', sans-serif;
@@ -124,6 +126,7 @@
 		margin-right: 35px;
 		margin-left: 45px;
 		cursor: pointer;
+		border-bottom: 0px solid transparent !important;
 	}
 	.image-container {
 		width: 60%;
@@ -198,5 +201,8 @@
 	}
 	a {
 		text-decoration: none;
+	}
+	.router-link-exact-active {
+		border-bottom: 2px solid #bdbcbc;
 	}
 </style>
