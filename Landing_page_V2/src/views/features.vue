@@ -139,14 +139,13 @@
 	}
 	.title {
 		font-family: 'Neuropolitical';
-		font-style: normal;
 		font-weight: 400;
 		font-size: 36px;
 		line-height: 111.4%;
 		text-align: center;
-		color: #bdbcbc;
-		margin-top: 7vh;
-		margin-bottom: 10vh;
+		color: #d9d9d9;
+		margin-top: 4vh;
+		margin-bottom: 6vh;
 	}
 	.row {
 		display: flex;
@@ -155,7 +154,7 @@
 	}
 	.card {
 		height: 150px;
-		width: 430px;
+		width: 410px;
 		margin: 40px 15px;
 		background: rgba(201, 191, 182, 0.5);
 		border: 1px solid #bdbcbc;

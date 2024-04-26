@@ -126,7 +126,7 @@
 		height: calc(100vh - 100px);
 		display: flex;
 		justify-content: space-evenly;
-		margin-top: 7vh;
+		margin-top: 4vh;
 	}
 	.left {
 		width: 42vw;
@@ -148,13 +148,13 @@
 		font-size: 32px;
 		line-height: 111.4%;
 		color: #d9d9d9;
-		margin-bottom: 60px;
+		margin-bottom: 30px;
 	}
 	.text {
 		font-style: normal;
 		font-weight: 400;
-		font-size: 23px;
-		line-height: 111.4%;
+		font-size: 19px;
+		line-height: 22px;
 		color: #d9d9d9;
 		width: 90%;
 	}
@@ -165,7 +165,7 @@
 		display: flex;
 	}
 	.team {
-		margin: 0px 20px;
+		margin: 0px 10px;
 		display: flex;
 		flex-direction: column;
 		align-items: center;
@@ -193,11 +193,11 @@
 	}
 	.image-container {
 		height: 60%;
-		margin-top: 100px;
-		margin-left: 70px;
+		margin-top: 30px;
+		margin-left: 20px;
 	}
 	.image {
-		height: 500px;
+		height: 400px;
 	}
 	.router-link-exact-active {
 		border-bottom: 2px solid #bdbcbc;

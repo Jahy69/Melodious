@@ -220,7 +220,7 @@
 	.content {
 		height: calc(100vh - 100px);
 		display: flex;
-		margin-top: 7vh;
+		margin-top: 4vh;
 	}
 	.left {
 		width: 40vw;
@@ -238,18 +238,17 @@
 		font-size: 32px;
 		line-height: 111.4%;
 		color: #d9d9d9;
-		margin-bottom: 40px;
+		margin-bottom: 20px;
 	}
 	.profil-card {
 		backdrop-filter: blur(100px);
 		background: rgba(255, 255, 255, 0.4);
 		border-radius: 20px;
 		width: 450px;
-		height: 630px;
 	}
 	.profil-header {
 		display: flex;
-		padding: 25px 0;
+		padding: 15px 0;
 	}
 	.profil-picture {
 		border-radius: 100px;
@@ -292,13 +291,12 @@
 		height: 1px;
 		background-color: #171717;
 		margin: 0 auto;
-		margin-bottom: 20px;
+		margin-bottom: 10px;
 	}
 	.tarif-card {
 		backdrop-filter: blur(100px);
 		background: rgba(255, 255, 255, 0.4);
 		border-radius: 20px;
-		width: 700px;
 		height: 200px;
 		margin-bottom: 25px;
 		display: flex;
@@ -395,26 +393,26 @@
 	.line {
 		display: flex;
 		justify-content: center;
-		margin-bottom: 7px;
+		margin-bottom: 6px;
 	}
 	.input-container {
 		margin: 0px 10px;
 	}
 	.input-title {
 		font-weight: 600;
-		font-size: 16px;
+		font-size: 14px;
 		color: #000000;
-		margin-bottom: 4px;
+		margin-bottom: 3px;
 	}
 	.input {
 		background: #d9d9d9;
 		opacity: 0.6;
 		border-radius: 5px;
-		font-size: 16px;
+		font-size: 15px;
 		color: #000000;
 		border: none;
 		padding-left: 10px !important;
-		padding: 5px 0px;
+		padding: 4px 0px;
 		width: 170px;
 	}
 	.full {
@@ -430,7 +428,7 @@
 	}
 	.data-container {
 		display: flex;
-		margin-top: 30px;
+		margin-top: 15px;
 		margin-left: 33px;
 	}
 	.checkbox {
@@ -456,7 +454,8 @@
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		margin-top: 50px;
+		margin-top: 30px;
+		padding-bottom: 25px;
 	}
 	.dl-btn {
 		border-radius: 7px;

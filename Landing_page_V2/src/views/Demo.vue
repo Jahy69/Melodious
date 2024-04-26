@@ -130,7 +130,7 @@
 		height: calc(100vh - 100px);
 		display: flex;
 		justify-content: space-around;
-		margin-top: 7vh;
+		margin-top: 4vh;
 	}
 	.header {
 		height: 100px;
@@ -181,7 +181,7 @@
 	}
 	.demo-left {
 		width: 50vw;
-		height: 680px;
+		height: 72vh;
 	}
 	.demo-right {
 		width: 37vw;
@@ -378,7 +378,6 @@
 		border-radius: 15px;
 	}
 	.title {
-		margin-top: 20px;
 		width: 350px;
 		font-weight: 400;
 		font-size: 25px;
@@ -390,8 +389,7 @@
 		margin-top: 20px;
 		font-style: normal;
 		font-weight: 400;
-		font-size: 16px;
-		line-height: 24px;
+		font-size: 14px;
 		display: flex;
 		align-items: center;
 		color: #c6c6c6;

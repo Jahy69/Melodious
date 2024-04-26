@@ -82,7 +82,7 @@
 	.title {
 		margin-top: 30px;
 		color: #bdbcbc;
-		font-size: 7rem;
+		font-size: 5.5rem;
 		writing-mode: vertical-rl;
 		text-orientation: mixed;
 		font-family: 'neuropolitical', sans-serif;
@@ -129,7 +129,7 @@
 		border-bottom: 0px solid transparent !important;
 	}
 	.image-container {
-		width: 60%;
+		width: 50%;
 		height: 100%;
 	}
 	.image {
@@ -187,7 +187,7 @@
 		display: flex;
 		justify-content: center;
 		align-items: center;
-		margin-top: 18%;
+		margin-top: 35px;
 	}
 	.divider {
 		height: 1px;
