@@ -1,56 +1,35 @@
 <script>
-// Import useAuth0 from @auth0/auth0-vue
 import { useAuth0 } from "@auth0/auth0-vue";
 
 export default {
-  // Setup function to initialize the component
   setup() {
-    // Destructure loginWithRedirect and isAuthenticated from useAuth0
     const { loginWithRedirect, isAuthenticated } = useAuth0();
 
-    // Return an object containing login function and isAuthenticated flag
     return {
-      // Login function to redirect user to Auth0 login page
       login: () => {
         loginWithRedirect();
       },
-      // isAuthenticated flag to check if the user is authenticated
       isAuthenticated,
     };
   },
-  // Data function to initialize component data
   data() {
-    // Return an object containing chat_history, chat_box_repertory, input, and loading
     return {
-      // Array to store chat history
       chat_history: [],
-      // Array to store chat box repertory
       chat_box_repertory: [],
-      // Input value for user message
       input: "",
-      // Loading flag to show loading state
       loading: false,
     };
   },
-  // Methods object containing SendBot function
   methods: {
-    // Async function to send message to bot and receive response
     async SendBot(query) {
-      // Check if query is not empty
       if (!query) return;
-      // Get chatbox element
       var objDiv = document.getElementById("chatbox");
-      // Set loading flag to true
       this.loading = true;
-      // Clear input value
       this.input = "";
-      // Push user message to chat_box_repertory
       await this.chat_box_repertory.push({ author: "client", text: query });
 
-      // Scroll to bottom of chatbox
       objDiv.scroll(0, objDiv.scrollHeight);
 
-      // Initialize headers and request options
       var myHeaders = new Headers();
       myHeaders.append("Content-Type", "application/json");
 
@@ -65,31 +44,20 @@ export default {
         redirect: "follow",
       };
 
-      // Initialize botResponse variable
       let botResponse;
-      // Fetch response from bot API
       await fetch(
         "https://melodious69-8eecb5339a18.herokuapp.com/chat",
         requestOptions
       )
-        // Parse response as text
-       .then((response) => response.text())
-        // Parse response as JSON and assign to botResponse variable
-       .then((result) => (botResponse = JSON.parse(result)))
-        // Log error if any
-       .catch((error) => console.log("error", error));
-      // Log botResponse
+        .then((response) => response.text())
+        .then((result) => (botResponse = JSON.parse(result)))
+        .catch((error) => console.log("error", error));
       console.log(botResponse);
-      // Get answer from botResponse
       let answer = botResponse.answer;
-      // Push user message and bot response to chat_history
       this.chat_history.push([query, answer]);
-      // Push bot response to chat_box_repertory
       await this.chat_box_repertory.push({ author: "server", text: answer });
-      // Scroll to bottom of chatbox
       objDiv.scroll(0, objDiv.scrollHeight);
 
-      // Set loading flag to false
       this.loading = false;
     },
   },
@@ -97,327 +65,420 @@ export default {
 </script>
 
 <template>
-  <!-- Demo component -->
   <div class="demo">
-    <!-- Header component -->
     <div class="header">
-      <!-- Logo component -->
       <div class="logo">
         <img style="width: 65px" src="../assets/logo.svg" alt="" />
       </div>
-      <!-- Navbar component -->
       <div class="navbar">
-        <!-- Navigation links -->
         <RouterLink class="nav-btn" to="/">Accueil</RouterLink>
         <RouterLink class="nav-btn" to="/fonctionnalites"
           >Fonctionnalités</RouterLink
         >
-        <!-- Demo button for unauthenticated users -->
         <div v-if="!isAuthenticated" class="nav-btn" @click="login">Demo</div>
-        <!-- Demo link for authenticated users -->
         <RouterLink v-if="isAuthenticated" class="nav-btn" to="/demo"
           >Demo</RouterLink
         >
         <RouterLink class="nav-btn" to="/a-propos">À propos</RouterLink>
-        <!-- Login button for unauthenticated users -->
         <div v-if="!isAuthenticated" class="login" @click="login">
           Connexion
         </div>
-        <!-- Profile link for authenticated users -->
         <RouterLink v-if="isAuthenticated" class="login" to="/profil"
           >Profil</RouterLink
         >
       </div>
     </div>
 
-    <!-- Content component -->
     <div class="content">
-      <!-- Demo-left component -->
-<div class="demo-left">
-        <!-- Chatbox component -->
-        <div class="chatbox" id="chatbox">
-          <!-- Chatbox repertory component -->
-          <div class="chatbox-repertory" v-for="(item, index) in chat_box_repertory" :key="index">
-            <!-- Chatbox repertory message component -->
-            <div class="chatbox-repertory-message" v-if="item.author === 'client'">
-              <!-- User message component -->
-              <div class="user-message">
-                <p>{{ item.text }}</p>
-              </div>
-            </div>
-            <!-- Chatbox repertory message component -->
-            <div class="chatbox-repertory-message" v-else>
-              <!-- Bot message component -->
-              <div class="bot-message">
-                <p>{{ item.text }}</p>
+      <div class="demo-left">
+        <div class="chatboxCont">
+          <div class="chatboxHeader">
+            <img class="logoHeader" src="../assets/logo.svg" alt="logo" />
+            <p class="textHeader">Melodious</p>
+          </div>
+          <div class="chatbox" id="chatbox">
+            <div class="imessage">
+              <div
+                :class="[message.author == 'server' ? 'from-them' : 'from-me']"
+                v-for="(message, idx) in chat_box_repertory"
+                :key="idx"
+              >
+                <div v-if="message.author == server" class="msgLogo"></div>
+                <p
+                  :class="[
+                    message.author == 'server' ? 'from-them' : 'from-me',
+                  ]"
+                >
+                  <span>{{ message.text }}</span>
+                </p>
               </div>
             </div>
           </div>
-        </div>
-
-        <!-- Input component -->
-        <div class="input">
-          <!-- Input field component -->
-          <input
-            type="text"
-            placeholder="Type your message here..."
-            v-model="input"
-            @keyup.enter="SendBot(input)"
-          />
-          <!-- Send button component -->
-          <button @click="SendBot(input)">Send</button>
+          <div class="inputBox">
+            <input
+              v-if="!loading"
+              class="inputUser"
+              type="text"
+              @keyup.enter="SendBot(input)"
+              v-model="input"
+              placeholder="Parle-moi de la funk"
+            />
+            <input
+              v-if="!loading"
+              class="send"
+              type="button"
+              @click="SendBot(input)"
+              value
+            />
+          </div>
         </div>
       </div>
-
-      <!-- Demo-right component -->
       <div class="demo-right">
-        <!-- Title component -->
         <div class="title">
-          <h1>Découvrez notre solution</h1>
+          ESSAYEZ GRATUITEMENT
+          <span style="font-family: 'Neuropolitical'">Melodious</span>
         </div>
-        <!-- Description component -->
-        <div class="description">
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit
-            tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.
-          </p>
+        <div class="text">
+          Notre chatbot intelligent utilise l'intelligence artificielle pour
+          enrichir votre expérience musicale de manière interactive et
+          éducative. Voici ce que vous pouvez faire avec Melodious :
+          <br /><br />• Explorer des genres musicaux : De la pop au baroque,
+          découvrez les subtilités et les histoires derrière divers genres
+          musicaux.<br /><br />
+          • Découvrir des artistes et des chansons : Trouvez de nouveaux favoris
+          avec des recommandations personnalisées basées sur vos goûts.<br /><br />
+          • Apprendre des techniques musicales : Obtenez des explications sur
+          les techniques utilisées dans vos morceaux préférés.<br /><br />
+          • Écouter des anecdotes musicales : Plongez dans l'histoire et les
+          origines des chansons et des mouvements musicaux.<br /><br />
+          Tapez simplement votre question ou votre intérêt et laissez vous
+          guider par l'expertise de notre AI.
         </div>
-        <!-- Image component -->
-        <div class="image">
-          <img src="../assets/demo.svg" alt="" />
-        </div>
+        <RouterLink class="btn" to="/profil">Mettre à niveau</RouterLink>
       </div>
     </div>
   </div>
 </template>
 
-<style>
-/* Global styles */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-body {
-  font-family: "Inter", sans-serif;
-  background-color: #f5f5f5;
-}
-
-a {
-  text-decoration: none;
-  color: #000;
-}
-
-button {
-  cursor: pointer;
-  background-color: #000;
-  color: #fff;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  margin-left: 10px;
-}
-
-button:hover {
-  background-color: #333;
-}
-
-/* Demo component styles */
+<style scoped>
 .demo {
+  height: 100vh;
+  background-image: url("../assets/background.png");
+  background-size: cover;
+  background-repeat: no-repeat;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 100vh;
-}
-
-.header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  padding: 20px;
-  background-color: #fff;
-  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 100;
-}
-
-.logo {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.navbar {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.nav-btn {
-  padding: 10px 20px;
-  margin-right: 10px;
-  border-radius: 5px;
-  background-color: #fff;
-  box-shadow: 0px 2px 5pxrgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease;
-}
-
-.nav-btn:hover {
-  background-color: #f5f5f5;
-}
-
-.login {
-  padding: 10px 20px;
-  border-radius: 5px;
-  background-color: #000;
-  color: #fff;
-  transition: all 0.3s ease;
-}
-
-.login:hover {
-  background-color: #333;
 }
 
 .content {
+  height: calc(100vh - 100px);
   display: flex;
-  align-items: center;
-  justify-content: center;
+  justify-content: space-around;
+  margin-top: 4vh;
+}
+
+.header {
+  height: 100px;
   width: 100%;
-  height: 100%;
-  padding-top: 100px;
-  gap: 50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  margin-left: 50px;
+  margin-top: 5px;
+}
+
+.navbar {
+  z-index: 1000;
+  height: 100px;
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.nav-btn {
+  font-family: "neuropolitical", sans-serif;
+  font-size: 0.85rem;
+  color: #bdbcbc;
+  padding: 3px 0px;
+  margin: 7px 20px;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+}
+
+.login {
+  font-family: "neuropolitical", sans-serif;
+  background-color: #9c8978;
+  padding: 5px 10px;
+  color: #171717;
+  border-radius: 100px;
+  width: 120px;
+  display: flex;
+  justify-content: center;
+  margin-right: 35px;
+  margin-left: 45px;
+  cursor: pointer;
+  border-bottom: 0px solid transparent !important;
+}
+
+a {
+  text-decoration: none !important;
+  display: flex;
+  justify-content: center;
 }
 
 .demo-left {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 50%;
-  height: 100%;
-}
-
-.chatbox {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: flex-start;
-  width: 100%;
-  height: 70%;
-  background-color: #fff;
-  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
-  border-radius: 10px;
-  padding: 20px;
-  overflow-y: scroll;
-}
-
-.chatbox-repertory {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: center;
-  width: 100%;
-  margin-bottom: 20px;
-}
-
-.chatbox-repertory-message {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  margin-bottom: 10px;
-}
-
-.user-message {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: fit-content;
-  background-color: #000;
-  color: #fff;
-  padding: 10px 20px;
-  border-radius: 10px;
-  margin-right: 20px;
-}
-
-.bot-message {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: fit-content;
-  background-color: #f5f5f5;
-  padding: 10px 20px;
-  border-radius: 10px;
-  margin-left: 20px;
-}
-
-.input {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 10%;
-  background-color: #fff;
-  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
-  border-radius: 10px;
-  padding: 20px;
-  gap: 10px;
-}
-
-.input input {
-  width: 80%;
-  padding: 10px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
+  width: 50vw;
+  height: 72vh;
 }
 
 .demo-right {
+  width: 37vw;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  width: 50%;
+}
+
+.chatboxCont {
+  display: flex;
+  flex-direction: column;
   height: 100%;
+  width: 100%;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px 2px rgba(15, 26, 41, 0.2);
+  background: rgba(255, 255, 255, 0.4);
+}
+
+.chatboxHeader {
+  display: flex;
+  flex-direction: row;
+  height: 80px;
+  background-color: #c6c6c6;
+  border-radius: 10px 10px 0px 0px;
+  align-items: center;
+}
+
+.logoHeader {
+  width: 40px;
+  height: 40px;
+  margin-left: 25px;
+  margin-right: 20px;
+}
+
+.textHeader {
+  font-family: "Neuropolitical";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 30px;
+  line-height: 36px;
+  color: #3f3b36;
+}
+
+.chatbox {
+  height: 100%;
+  overflow: scroll;
+  overflow-x: hidden;
+  padding-top: 15px;
+  padding-bottom: 25px;
+}
+
+.imessage {
+  border-radius: 0.25rem;
+  display: flex;
+  flex-direction: column;
+  font-size: 0.9rem;
+}
+
+.imessage p {
+  border-radius: 1.15rem;
+  line-height: 1.25;
+  max-width: 75%;
+  padding: 0.5rem 0.875rem;
+  position: relative;
+  word-wrap: break-word;
+}
+
+.imessage p::before,
+.imessage p::after {
+  bottom: -0.1rem;
+  content: "";
+  height: 1rem;
+  position: absolute;
+}
+
+p.from-me {
+  align-self: flex-end;
+  background-color: #c69c6d;
+  color: #0f1a29;
+  margin-right: 15px !important;
+}
+
+div.from-me {
+  align-self: flex-end;
+}
+
+p.from-me::before {
+  border-bottom-left-radius: 0.8rem 0.7rem;
+  border-right: 1rem solid #c69c6d;
+  right: -0.35rem;
+  transform: translate(0, -0.1rem);
+}
+
+p.from-me::after {
+  background: #8c8987;
+  border-bottom-left-radius: 0.5rem;
+  right: -40px;
+  transform: translate(-30px, -2px);
+  width: 10px;
+}
+
+p[class^="from-"] {
+  margin: 0.3rem 0;
+  width: fit-content;
+}
+
+p.from-me ~ p.from-me {
+  margin: 0.25rem 0 0;
+}
+
+p.from-me ~ p.from-me:not(:last-child) {
+  margin: 0.25rem 0 0;
+}
+
+p.from-me ~ p.from-me:last-child {
+  margin-bottom: 0.5rem;
+}
+
+p.from-them {
+  align-items: flex-start;
+  background-color: #edeef6;
+  color: #0f1a29;
+  margin-left: 45px;
+}
+
+p.from-them:before {
+  border-bottom-right-radius: 0.8rem 0.7rem;
+  border-left: 1rem solid #edeef6;
+  left: -0.35rem;
+  transform: translate(0, -0.1rem);
+}
+
+p.from-them::after {
+  background-color: #b8b1a9;
+  border-bottom-right-radius: 0.5rem;
+  left: 20px;
+  transform: translate(-30px, -2px);
+  width: 10px;
+}
+
+.chatbox::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.chatbox::-webkit-scrollbar-track {
+  border-radius: 10px;
+}
+
+.chatbox::-webkit-scrollbar-thumb {
+  background-color: #9c8978;
+  border-radius: 10px;
+}
+
+.msgLogo {
+  width: 25px;
+  height: 25px;
+  background-size: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  margin-top: -20px;
+  margin-left: 10px;
+}
+
+.inputBox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 45px;
+  margin-bottom: 18px;
+}
+
+.inputUser {
+  background-color: transparent;
+  display: flex;
+  font-size: 0.85rem;
+  height: 100%;
+  width: 100%;
+  padding-left: 15px;
+  margin-left: 18px;
+  border: 1px solid #d9d9d9;
+  border-radius: 8px;
+}
+
+::placeholder {
+  color: #3f3b36;
+  font-size: 0.85rem;
+  font-weight: 300;
+  vertical-align: middle;
+}
+
+input:focus-visible {
+  outline-color: #c69c6d;
+}
+
+.send {
+  width: 30px;
+  height: 30px;
+  margin-right: 30px;
+  margin-left: 15px;
+  background: url("../assets/send.svg");
+  background-position: center;
+  background-repeat: no-repeat;
+  border-style: none;
+  cursor: pointer;
+}
+
+.btn {
+  margin-top: 25px;
+  display: flex;
+  font-weight: 700;
+  justify-content: center;
+  padding: 5px 10px;
+  color: #171717;
+  width: 180px;
+  align-items: center;
+  margin-right: 35px;
+  margin-left: 45px;
+  cursor: pointer;
+  background: linear-gradient(90deg, #998675 0%, #c7b299 100%);
+  border: 1px solid #bdbcbc;
+  border-radius: 15px;
 }
 
 .title {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 20%;
-}
-
-.description {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 40%;
-}
-
-.description p {
+  width: 350px;
+  font-weight: 400;
+  font-size: 25px;
+  line-height: 30px;
+  color: #c6c6c6;
   text-align: center;
-  font-size: 20px;line-height: 1.5;
 }
 
-.image {
+.text {
+  margin-top: 20px;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
   display: flex;
   align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 40%;
+  color: #c6c6c6;
 }
 
-.image img {
-  width: 80%;
-  height: 80%;
-  object-fit: contain;
+.router-link-exact-active {
+  border-bottom: 2px solid #bdbcbc;
 }
 </style>
